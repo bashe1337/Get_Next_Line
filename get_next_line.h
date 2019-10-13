@@ -6,16 +6,23 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:31:27 by bashe             #+#    #+#             */
-/*   Updated: 2019/09/27 20:52:05 by bashe            ###   ########.fr       */
+/*   Updated: 2019/10/13 18:52:48 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 # include <unistd.h>
-# include "libft.h"
 # include <stdlib.h>
+# include "./libft/libft.h"
+# define BUFF_SIZE 100
 
-int		get_next_line(const int fd, char **line);
+typedef struct		s_gnl
+{
+	int				fd;
+	struct s_gnl	*next;
+}					t_gnl;
+
+int					get_next_line(const int fd, char **line);
 
 #endif
