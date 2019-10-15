@@ -10,24 +10,24 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/a.out",
 			"args": [],
-			"stopAtEntry": false,
+			"stopAtEntry": true,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb"
 		},
-
 		{
-			"name": "(lldb) Launch",
+			"name": "gcc build and debug active file",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "enter program name, for example ${workspaceFolder}/a.out",
+			"program": "${fileDirname}/${fileBasenameNoExtension}",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
-			"MIMode": "lldb"
+			"MIMode": "lldb",
+			"preLaunchTask": "gcc build active file"
 		}
 	]
 }
