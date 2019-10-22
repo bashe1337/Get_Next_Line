@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/10/18 21:33:53 by bashe            ###   ########.fr       */
+/*   Updated: 2019/10/22 18:32:05 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,18 @@ char	*get_remain(char *remain)
 
 	p = NULL;
 	str = ft_strnew(1);
-	if (remain)
+	if ((p = ft_strchr(remain, '\n')))
 	{
-		if ((p = ft_strchr(remain, '\n')))
-		{
-			*p = '\0';
-			str = ft_strdup(remain);
-			p++;
-			ft_strcpy(remain, p);
-		}
-		else
-		{
-			str = ft_strdup(remain);
-			ft_strclr(remain);
-		}
+		*p = '\0';
+		str = ft_strdup(remain);
+		p++;
+		ft_strcpy(remain, p);
+		return (str);
+	}
+	else if (remain)
+	{
+		str = ft_strdup(remain);
+		ft_strclr(remain);
 	}
 	tmp = str;
 	ft_strdel(&tmp);
@@ -63,12 +61,10 @@ int		get_line(const int fd, char **line, char *remain)
 	*line = get_remain(remain);
 	while ((!p && ((ret = read(fd, buff, BUFF_SIZE)) != 0)))
 	{
-		if (*(remain) != '\0')
-			break ;
 		buff[ret] = '\0';
 		if ((p = ft_strchr(buff, '\n')))
 		{
-			*p = '\0';
+			*(p) = '\0';
 			p++;
 			remain = ft_strcpy(remain, p);
 		}
