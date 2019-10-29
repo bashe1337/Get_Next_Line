@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/10/22 18:32:05 by bashe            ###   ########.fr       */
+/*   Updated: 2019/10/29 19:24:49 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,32 @@
 
 int		get_output(int ret, char **line, char *remain)
 {
-	if (ret > 0 || ft_strlen(*line) || ft_strlen(remain))
+	if (ret > 0 || ft_strlen(remain) || ft_strlen(*line))
 		return (1);
-	else if (ret < 0)
-		return (-1);
 	else
 		return (0);
 }
 
-char	*get_remain(char *remain)
+char	*get_remain(char *remain, char **p)
 {
-	char	*p;
 	char	*str;
 	char	*tmp;
 
-	p = NULL;
 	str = ft_strnew(1);
-	if ((p = ft_strchr(remain, '\n')))
+	if ((*p = ft_strchr(remain, '\n')))
 	{
-		*p = '\0';
+		**p = '\0';
 		str = ft_strdup(remain);
-		p++;
-		ft_strcpy(remain, p);
-		return (str);
+		(*p)++;
+		ft_strcpy(remain, *p);
 	}
 	else if (remain)
 	{
+		tmp = str;
 		str = ft_strdup(remain);
+		ft_strdel(&tmp);
 		ft_strclr(remain);
 	}
-	tmp = str;
-	ft_strdel(&tmp);
 	return (str);
 }
 
@@ -58,19 +53,19 @@ int		get_line(const int fd, char **line, char *remain)
 	char		*tmp;
 
 	p = NULL;
-	*line = get_remain(remain);
+	ret = 1;
+	*line = get_remain(remain, &p);
 	while ((!p && ((ret = read(fd, buff, BUFF_SIZE)) != 0)))
 	{
 		buff[ret] = '\0';
 		if ((p = ft_strchr(buff, '\n')))
 		{
-			*(p) = '\0';
-			p++;
-			remain = ft_strcpy(remain, p);
+			ft_strcpy(remain, ++p);
+			ft_strclr(--p);
 		}
+		tmp = *line;
 		if (!(*line = ft_strjoin(*line, buff)) || ret < 0)
 			return (-1);
-		tmp = *line;
 		ft_strdel(&tmp);
 	}
 	return (get_output(ret, line, remain));
@@ -114,24 +109,16 @@ int		get_next_line(const int fd, char **line)
 	return (get_line(tmp->fd, line, tmp->remain));
 }
 
-int main(void)
-{
-	char *line;
-	int fd1;
-	int fd2;
-	int fd3;
-	int fd4;
+// int main(void)
+// {
+// 	char *line;
+// 	int fd;
+// 	int ret;
+// 	int i;
 
-	fd1 = open("text.txt", O_RDONLY);
-	fd2 = open("bruh.txt", O_RDONLY);
-	fd3 = open("aa.txt", O_RDONLY);
-	fd4 = open("good.txt", O_RDONLY);
-	get_next_line(fd4, &line);
-		printf("%s\n\n", line);
-	get_next_line(fd4, &line);
-		printf("%s\n\n", line);
-	get_next_line(fd4, &line);
-		printf("%s\n\n", line);
-	get_next_line(fd4, &line);
-		printf("%s\n\n", line);
-}
+// 	fd = open("big_text.txt", O_RDONLY);
+// 	while (get_next_line(fd, &line))
+// 	{
+// 		printf("%s\n\n", line);
+// 	}
+// }
