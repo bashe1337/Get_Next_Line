@@ -6,13 +6,13 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/10/29 19:24:49 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/04 18:39:29 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <fcntl.h>
-#include "stdio.h"
+#include <stdio.h>
 
 int		get_output(int ret, char **line, char *remain)
 {
@@ -28,6 +28,7 @@ char	*get_remain(char *remain, char **p)
 	char	*tmp;
 
 	str = ft_strnew(1);
+	tmp = str;
 	if ((*p = ft_strchr(remain, '\n')))
 	{
 		**p = '\0';
@@ -37,11 +38,10 @@ char	*get_remain(char *remain, char **p)
 	}
 	else if (remain)
 	{
-		tmp = str;
 		str = ft_strdup(remain);
-		ft_strdel(&tmp);
 		ft_strclr(remain);
 	}
+	ft_strdel(&tmp);
 	return (str);
 }
 
@@ -89,7 +89,7 @@ int		get_next_line(const int fd, char **line)
 	static t_gnl	*head;
 	t_gnl			*tmp;
 
-	if (!line || fd <= 0)
+	if (!line || fd < 0)
 		return (-1);
 	if (head == NULL)
 		head = get_new_elem(fd);
@@ -109,16 +109,13 @@ int		get_next_line(const int fd, char **line)
 	return (get_line(tmp->fd, line, tmp->remain));
 }
 
-// int main(void)
-// {
-// 	char *line;
-// 	int fd;
-// 	int ret;
-// 	int i;
+int main (void)
+{
+	int fd;
+	char *line;
 
-// 	fd = open("big_text.txt", O_RDONLY);
-// 	while (get_next_line(fd, &line))
-// 	{
-// 		printf("%s\n\n", line);
-// 	}
-// }
+	fd = open("gnl1_2.txt", O_RDONLY);
+	line = NULL;
+	while (get_next_line(fd, &line))
+		printf("%s\n", line);
+}
