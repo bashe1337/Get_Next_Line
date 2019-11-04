@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:31:27 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/04 18:32:22 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/04 19:42:10 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 # include <unistd.h>
 # include <stdlib.h>
-# include "./libft/libft.h"
+# include "libft/libft.h"
 # define BUFF_SIZE 5
 
 typedef struct		s_gnl

@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/04 18:39:29 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/04 20:32:07 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,23 @@ char	*get_remain(char *remain, char **p)
 	char	*str;
 	char	*tmp;
 
-	str = ft_strnew(1);
-	tmp = str;
+	str = NULL;
 	if ((*p = ft_strchr(remain, '\n')))
 	{
 		**p = '\0';
+		tmp = str;
 		str = ft_strdup(remain);
 		(*p)++;
 		ft_strcpy(remain, *p);
 	}
-	else if (remain)
+	else
 	{
-		str = ft_strdup(remain);
+		tmp = str;
+		str = ft_strnew(ft_strlen(remain) + 1);
+		ft_strcpy(str, remain);
 		ft_strclr(remain);
 	}
-	ft_strdel(&tmp);
+	//free(tmp);
 	return (str);
 }
 
@@ -66,7 +68,7 @@ int		get_line(const int fd, char **line, char *remain)
 		tmp = *line;
 		if (!(*line = ft_strjoin(*line, buff)) || ret < 0)
 			return (-1);
-		ft_strdel(&tmp);
+		free(tmp);
 	}
 	return (get_output(ret, line, remain));
 }
@@ -114,7 +116,7 @@ int main (void)
 	int fd;
 	char *line;
 
-	fd = open("gnl1_2.txt", O_RDONLY);
+	fd = open("big_text.txt", O_RDONLY);
 	line = NULL;
 	while (get_next_line(fd, &line))
 		printf("%s\n", line);
