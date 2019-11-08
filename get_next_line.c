@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/04 20:32:07 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/08 20:29:56 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,21 @@ int		get_output(int ret, char **line, char *remain)
 char	*get_remain(char *remain, char **p)
 {
 	char	*str;
-	char	*tmp;
 
 	str = NULL;
 	if ((*p = ft_strchr(remain, '\n')))
 	{
 		**p = '\0';
-		tmp = str;
 		str = ft_strdup(remain);
 		(*p)++;
 		ft_strcpy(remain, *p);
 	}
 	else
 	{
-		tmp = str;
 		str = ft_strnew(ft_strlen(remain) + 1);
 		ft_strcpy(str, remain);
 		ft_strclr(remain);
 	}
-	//free(tmp);
 	return (str);
 }
 
@@ -119,5 +115,10 @@ int main (void)
 	fd = open("big_text.txt", O_RDONLY);
 	line = NULL;
 	while (get_next_line(fd, &line))
+	{
 		printf("%s\n", line);
+		//free(line);
+	}
+	close(fd);
+	return (0);
 }
