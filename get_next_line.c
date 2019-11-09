@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/08 20:29:56 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/09 19:15:43 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ char	*get_remain(char *remain, char **p)
 		(*p)++;
 		ft_strcpy(remain, *p);
 	}
-	else
+	else 
 	{
-		str = ft_strnew(ft_strlen(remain) + 1);
+		str = ft_strnew(ft_strlen(remain));
 		ft_strcpy(str, remain);
+		// str = ft_strdup(remain);
 		ft_strclr(remain);
 	}
+	// else
+	// 	str = ft_strnew(0);
 	return (str);
 }
 
@@ -64,7 +67,7 @@ int		get_line(const int fd, char **line, char *remain)
 		tmp = *line;
 		if (!(*line = ft_strjoin(*line, buff)) || ret < 0)
 			return (-1);
-		free(tmp);
+		ft_strdel(&tmp);
 	}
 	return (get_output(ret, line, remain));
 }
@@ -117,7 +120,7 @@ int main (void)
 	while (get_next_line(fd, &line))
 	{
 		printf("%s\n", line);
-		//free(line);
+		free(line);
 	}
 	close(fd);
 	return (0);

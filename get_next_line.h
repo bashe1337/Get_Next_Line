@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:31:27 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/08 19:08:50 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/09 19:14:09 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "libft/libft.h"
-# define BUFF_SIZE 16
+# define BUFF_SIZE 1
 
 typedef struct		s_gnl
 {
