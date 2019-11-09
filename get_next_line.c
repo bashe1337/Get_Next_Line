@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/09 19:15:43 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/09 20:16:26 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ char	*get_remain(char *remain, char **p)
 		(*p)++;
 		ft_strcpy(remain, *p);
 	}
-	else 
+	else if (*(remain) != '\0')
 	{
-		str = ft_strnew(ft_strlen(remain));
-		ft_strcpy(str, remain);
-		// str = ft_strdup(remain);
+		// str = ft_strnew(ft_strlen(remain));
+		// ft_strcpy(str, remain);
+		str = ft_strdup(remain);
 		ft_strclr(remain);
 	}
-	// else
-	// 	str = ft_strnew(0);
+	else
+		str = ft_strnew(0);
 	return (str);
 }
 
@@ -54,6 +54,7 @@ int		get_line(const int fd, char **line, char *remain)
 	char		*tmp;
 
 	p = NULL;
+	tmp = NULL;
 	ret = 1;
 	*line = get_remain(remain, &p);
 	while ((!p && ((ret = read(fd, buff, BUFF_SIZE)) != 0)))
