@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/27 20:31:27 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/11 20:17:47 by bashe            ###   ########.fr       */
+/*   Created: 2019/11/11 20:10:44 by bashe             #+#    #+#             */
+/*   Updated: 2019/11/11 20:17:29 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# define BUFF_SIZE 1000
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
 
-typedef struct		s_gnl
+int main (void)
 {
-	int				fd;
-	char			*remain;
-	struct s_gnl	*next;
-}					t_gnl;
+	int fd;
+	char *line;
 
-int					get_next_line(const int fd, char **line);
-
-#endif
+	fd = open("good.txt", O_RDONLY);
+	line = NULL;
+	while (get_next_line(fd, &line))
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
+}

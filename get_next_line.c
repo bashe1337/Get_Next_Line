@@ -6,20 +6,21 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/09 20:16:26 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/11 20:16:37 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 int		get_output(int ret, char **line, char *remain)
 {
 	if (ret > 0 || ft_strlen(remain) || ft_strlen(*line))
 		return (1);
 	else
+	{
+		free(*line);
 		return (0);
+	}
 }
 
 char	*get_remain(char *remain, char **p)
@@ -36,8 +37,6 @@ char	*get_remain(char *remain, char **p)
 	}
 	else if (*(remain) != '\0')
 	{
-		// str = ft_strnew(ft_strlen(remain));
-		// ft_strcpy(str, remain);
 		str = ft_strdup(remain);
 		ft_strclr(remain);
 	}
@@ -109,20 +108,4 @@ int		get_next_line(const int fd, char **line)
 		head = tmp;
 	}
 	return (get_line(tmp->fd, line, tmp->remain));
-}
-
-int main (void)
-{
-	int fd;
-	char *line;
-
-	fd = open("big_text.txt", O_RDONLY);
-	line = NULL;
-	while (get_next_line(fd, &line))
-	{
-		printf("%s\n", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
 }
