@@ -6,7 +6,7 @@
 /*   By: bashe <bashe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:50:08 by bashe             #+#    #+#             */
-/*   Updated: 2019/11/11 20:16:37 by bashe            ###   ########.fr       */
+/*   Updated: 2019/11/12 22:03:45 by bashe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@ int		get_output(int ret, char **line, char *remain)
 {
 	if (ret > 0 || ft_strlen(remain) || ft_strlen(*line))
 		return (1);
+	else if (ret < 0)
+	{
+		ft_strdel(line);
+		return (-1);
+	}
 	else
 	{
-		free(*line);
+		ft_strdel(line);
 		return (0);
 	}
 }
@@ -56,7 +61,7 @@ int		get_line(const int fd, char **line, char *remain)
 	tmp = NULL;
 	ret = 1;
 	*line = get_remain(remain, &p);
-	while ((!p && ((ret = read(fd, buff, BUFF_SIZE)) != 0)))
+	while ((!p && ((ret = read(fd, buff, BUFF_SIZE)) > 0)))
 	{
 		buff[ret] = '\0';
 		if ((p = ft_strchr(buff, '\n')))
@@ -66,7 +71,7 @@ int		get_line(const int fd, char **line, char *remain)
 		}
 		tmp = *line;
 		if (!(*line = ft_strjoin(*line, buff)) || ret < 0)
-			return (-1);
+			return (get_output(ret, line, remain));
 		ft_strdel(&tmp);
 	}
 	return (get_output(ret, line, remain));
